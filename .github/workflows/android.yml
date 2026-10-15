@@ -15,17 +15,25 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
-          distribution: 'zulu'
+          distribution: 'temurin'
           java-version: '17'
 
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
+      - name: Extract Project Files
+        run: |
+          unzip -o RafiqAI_GitHub_Build.zip -d .
+          chmod +x gradlew || true
 
-      - name: Build Debug APK
-        run: gradle assembleDebug --no-daemon
+      - name: Build Debug APK with Gradle Wrapper
+        run: |
+          if [ -f "./gradlew" ]; then
+            ./gradlew assembleDebug --stacktrace
+          else
+            gradle assembleDebug --stacktrace
+          fi
 
       - name: Upload Debug APK
         uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: AliAI-debug-apk
           path: "**/build/outputs/apk/debug/*.apk"
