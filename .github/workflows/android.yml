@@ -1,4 +1,4 @@
-name: Build Rafiq AI APK
+name: Build Ali AI APK
 
 on:
   push:
@@ -18,10 +18,6 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
 
-      - name: Extract Project Files
-        run: |
-          unzip -o RafiqAI_GitHub_Build.zip -d .
-
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
 
@@ -31,5 +27,5 @@ jobs:
       - name: Upload Debug APK
         uses: actions/upload-artifact@v4
         with:
-          name: RafiqAI-debug-apk
+          name: AliAI-debug-apk
           path: "**/build/outputs/apk/debug/*.apk"
